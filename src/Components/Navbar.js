@@ -1,8 +1,15 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
+
     return (
         <AppBar position="static" sx={{ backgroundColor: '#820917' }}>
             <Toolbar>
@@ -14,6 +21,9 @@ const Navbar = () => {
                 <Button color="inherit" component={Link} to="/students">Students</Button>
                 <Button color="inherit" component={Link} to="/courses">Courses</Button>
                 <Button color="inherit" component={Link} to="/faculty">Faculty</Button>
+                {localStorage.getItem('token') && (
+                    <Button color="inherit" onClick={handleLogout}>Logout</Button>
+                )}
             </Toolbar>
         </AppBar>
     );
